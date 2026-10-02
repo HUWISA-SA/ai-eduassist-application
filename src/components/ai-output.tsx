@@ -81,12 +81,12 @@ function renderMarkdown(md: string) {
 
   let i = 0;
   while (i < lines.length) {
-    const line = lines[i].trimEnd();
+    const line = (lines[i] ?? "").trimEnd();
     if (line.startsWith("|")) {
       flushList();
       const tableLines: string[] = [];
-      while (i < lines.length && lines[i].trimEnd().startsWith("|")) {
-        tableLines.push(lines[i]);
+      while (i < lines.length && (lines[i] ?? "").trimEnd().startsWith("|")) {
+        tableLines.push(lines[i] ?? "");
         i++;
       }
       const table = renderTable(tableLines);
