@@ -36,6 +36,8 @@ const tones = [
 type Tone = (typeof tones)[number]["value"];
 
 function EmailPage() {
+  const [recipientName, setRecipientName] = useState("");
+  const [subject, setSubject] = useState("");
   const [context, setContext] = useState("");
   const [tone, setTone] = useState<Tone>("formal");
   const [output, setOutput] = useState("");
@@ -47,7 +49,14 @@ function EmailPage() {
     setLoading(true);
     setError("");
     try {
-      const result = await generateEmail({ data: { context: context.trim(), tone } });
+      const result = await generateEmail({
+        data: {
+          context: context.trim(),
+          recipientName: recipientName.trim(),
+          subject: subject.trim(),
+          tone,
+        },
+      });
       setOutput(result);
     } catch (e) {
       setError(e instanceof Error ? e.message : "Something went wrong. Please try again.");
@@ -74,6 +83,36 @@ function EmailPage() {
 
       <div className="grid gap-5 lg:grid-cols-2">
         <div className="rounded-xl border border-border bg-card p-5 shadow-sm">
+          <div className="mb-4 grid gap-4 sm:grid-cols-2">
+            <div>
+              <label
+                htmlFor="recipient-name"
+                className="mb-2 block text-sm font-semibold text-foreground"
+              >
+                Recipient name
+              </label>
+              <input
+                id="recipient-name"
+                value={recipientName}
+                onChange={(e) => setRecipientName(e.target.value)}
+                placeholder="e.g. Mrs Dlamini"
+                className="w-full rounded-lg border border-input bg-background px-3 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+              />
+            </div>
+            <div>
+              <label htmlFor="email-subject" className="mb-2 block text-sm font-semibold text-foreground">
+                Email subject
+              </label>
+              <input
+                id="email-subject"
+                value={subject}
+                onChange={(e) => setSubject(e.target.value)}
+                placeholder="e.g. Parent-Teacher Evening — Thursday"
+                className="w-full rounded-lg border border-input bg-background px-3 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+              />
+            </div>
+          </div>
+
           <label htmlFor="email-context" className="mb-2 block text-sm font-semibold text-foreground">
             What should the email cover?
           </label>
