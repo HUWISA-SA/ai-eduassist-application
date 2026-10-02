@@ -45,7 +45,9 @@ function renderMarkdown(md: string) {
       .map(parse)
       .filter((cells) => !cells.every((c) => c === "" || /^:?-{2,}:?$/.test(c)));
     if (!parsed.length) return null;
-    const [head, ...body] = parsed;
+    const head = parsed[0];
+    if (!head) return null;
+    const body = parsed.slice(1);
     return (
       <div key={key++} className="my-3 overflow-x-auto rounded-lg border border-border">
         <table className="w-full text-left text-xs">
@@ -64,9 +66,9 @@ function renderMarkdown(md: string) {
           <tbody>
             {body.map((cells, ri) => (
               <tr key={ri} className="border-t border-border">
-                {cells.map((c, ci) => (
+                {(cells ?? []).map((c, ci) => (
                   <td key={ci} className="px-3 py-2 align-top text-muted-foreground">
-                    {inline(c)}
+                    {inline(c ?? "")}
                   </td>
                 ))}
               </tr>
