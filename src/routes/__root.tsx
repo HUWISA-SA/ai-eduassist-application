@@ -8,10 +8,11 @@ import {
   Scripts,
   type ErrorComponentProps,
 } from "@tanstack/react-router";
-import { useEffect, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { AppSidebar, MobileMenuButton } from "@/components/app-sidebar";
 
 function NotFoundComponent() {
   return (
@@ -78,21 +79,30 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "AI EduAssist — AI Productivity for Education Professionals" },
+      {
+        name: "description",
+        content:
+          "AI EduAssist helps teachers and education professionals draft emails, summarise meeting notes, and plan their day with AI.",
+      },
+      { property: "og:title", content: "AI EduAssist — AI Productivity for Education Professionals" },
+      {
+        property: "og:description",
+        content:
+          "Draft professional emails, summarise meeting notes, and plan your day with AI — built for education professionals.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:site", content: "@Lovable" },
     ],
     links: [
+      { rel: "stylesheet", href: appCss },
+      { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+      { rel: "preconnect", href: "https://fonts.googleapis.com" },
+      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
-        href: appCss,
+        href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap",
       },
-      { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
     ],
   }),
   shellComponent: RootShell,
@@ -117,11 +127,31 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
     <QueryClientProvider client={queryClient}>
-      {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-      <Outlet />
+      <div className="flex min-h-screen w-full bg-background">
+        <AppSidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+        <div className="flex min-w-0 flex-1 flex-col">
+          <header className="sticky top-0 z-20 flex h-14 items-center gap-3 border-b border-border bg-card/80 px-4 backdrop-blur md:px-6">
+            <MobileMenuButton onClick={() => setSidebarOpen(true)} />
+            <p className="text-sm font-medium text-muted-foreground">
+              AI-powered tools for education professionals
+            </p>
+          </header>
+          <main className="flex-1 px-4 py-6 md:px-8 md:py-8">
+            <Outlet />
+          </main>
+          <footer className="border-t border-border px-4 py-4 md:px-8">
+            <p className="text-xs leading-relaxed text-muted-foreground">
+              <span className="font-medium text-foreground">Responsible AI:</span> AI-generated
+              content must be reviewed before use. Do not enter confidential or sensitive
+              information.
+            </p>
+          </footer>
+        </div>
+      </div>
     </QueryClientProvider>
   );
 }
