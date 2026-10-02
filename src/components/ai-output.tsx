@@ -7,19 +7,6 @@ function renderMarkdown(md: string) {
   let list: string[] = [];
   let key = 0;
 
-  const flushList = () => {
-    if (list.length) {
-      out.push(
-        <ul key={key++} className="list-disc space-y-1 pl-5">
-          {list.map((item, i) => (
-            <li key={i}>{inline(item)}</li>
-          ))}
-        </ul>,
-      );
-      list = [];
-    }
-  };
-
   const inline = (text: string) => {
     const parts = text.split(/(\*\*[^*]+\*\*)/g);
     return parts.map((p, i) =>
@@ -33,8 +20,78 @@ function renderMarkdown(md: string) {
     );
   };
 
-  for (const raw of lines) {
-    const line = raw.trimEnd();
+  const flushList = () => {
+    if (list.length) {
+      out.push(
+        <ul key={key++} className="list-disc space-y-1 pl-5">
+          {list.map((item, i) => (
+            <li key={i}>{inline(item)}</li>
+          ))}
+        </ul>,
+      );
+      list = [];
+    }
+  };
+
+  const renderTable = (rows: string[]) => {
+    const parse = (r: string) =>
+      r
+        .trim()
+        .replace(/^\|/, "")
+        .replace(/\|$/, "")
+        .split("|")
+        .map((c) => c.trim());
+    const parsed = rows
+      .map(parse)
+      .filter((cells) => !cells.every((c) => c === "" || /^:?-{2,}:?$/.test(c)));
+    if (!parsed.length) return null;
+    const [head, ...body] = parsed;
+    return (
+      <div key={key++} className="my-3 overflow-x-auto rounded-lg border border-border">
+        <table className="w-full text-left text-xs">
+          <thead className="bg-muted/60">
+            <tr>
+              {head.map((h, i) => (
+                <th
+                  key={i}
+                  className="whitespace-nowrap px-3 py-2 font-semibold text-foreground"
+                >
+                  {h}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {body.map((cells, ri) => (
+              <tr key={ri} className="border-t border-border">
+                {cells.map((c, ci) => (
+                  <td key={ci} className="px-3 py-2 align-top text-muted-foreground">
+                    {inline(c)}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    );
+  };
+
+  let i = 0;
+  while (i < lines.length) {
+    const line = lines[i].trimEnd();
+    if (line.startsWith("|")) {
+      flushList();
+      const tableLines: string[] = [];
+      while (i < lines.length && lines[i].trimEnd().startsWith("|")) {
+        tableLines.push(lines[i]);
+        i++;
+      }
+      const table = renderTable(tableLines);
+      if (table) out.push(table);
+      continue;
+    }
+    i++;
     if (/^#{1,4}\s/.test(line)) {
       flushList();
       out.push(
