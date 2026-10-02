@@ -1,54 +1,142 @@
 # AI EduAssist Dashboard
+# 🎓 AI EduAssist
 
-Build a modern, responsive web app called AI EduAssist, an AI-powered workplace productivity assistant for education professionals. No backend or login is required; users should access the app directly.
+**AI EduAssist** is an AI-powered workplace productivity assistant designed to support education professionals with common administrative, communication, planning, and information-processing tasks.
 
-Create a professional SaaS-style dashboard with sidebar navigation and 3 tools:
+The application was developed as part of the **CAPACITI AI Skill Accelerator Programme** to demonstrate the practical use of Artificial Intelligence, prompt engineering, responsible AI, and AI-supported workplace productivity.
 
-1. Smart Email Generator: Generate professional emails from user input with Formal, Friendly, and Persuasive tone options.
+## 🚀 Project Purpose
 
-2. Meeting Notes Summarizer: Users paste meeting notes and receive a concise summary with key decisions, action items, responsible persons, and deadlines.
+Education professionals often manage multiple responsibilities beyond teaching, including professional communication, meeting documentation, task planning, reporting, and reviewing educational information.
 
-3. AI Task Planner: Generate daily or weekly schedules from user tasks and prioritise them by urgency and importance.
+AI EduAssist brings AI-supported productivity tools into one simple and accessible interface to help users organise information, communicate professionally, and manage workplace tasks more efficiently.
 
-Requirements:
+## ✨ Core Features
 
-Dashboard layout with sidebar navigation
+### 📧 Smart Email Generator
 
-Responsive desktop and mobile design
+The Smart Email Generator creates professional emails based on information provided by the user.
 
-Clear input and output sections
+Users can:
 
-All generated responses must be dynamically AI-generated from the user's actual input. Do not use generic, preset, hard-coded, or simulated responses.
+- Enter the recipient's name
+- Provide an email subject
+- Describe the purpose and context of the email
+- Select a tone such as **Formal, Friendly, or Persuasive**
+- Receive an AI-generated professional email based on their actual input
 
-Where practical, allow meeting action items to flow into the Task Planner
+### 📝 Meeting Notes Summarizer
 
-Professional SaaS-style UI/UX
+The summarizer processes lengthy notes and produces a concise, structured summary.
 
-Light grey and dark blue colour scheme
+Where the information is available, it can identify:
 
-Responsible-AI disclaimer stating that AI-generated content must be reviewed before use and users should not enter confidential or sensitive information
+- Key information
+- Decisions
+- Action items
+- Responsible persons
+- Deadlines
 
-No backend, database, authentication, or sign-in
+The tool can also summarise other professional and educational information such as reports and lecture notes. It does not intentionally invent missing decisions, tasks, or deadlines when these are not provided in the source material.
 
-Keep the application simple, polished, and functional. Prioritise the three working AI tools and user experience over unnecessary features.
+### 📅 AI Task Planner
 
-This project was built with [Lovable](https://lovable.dev).
+The AI Task Planner helps users organise tasks into practical daily or weekly schedules.
 
-## Build with Lovable
+It can:
 
-Continue developing this project in the [Lovable editor](https://lovable.dev/projects/fb4640eb-bc0f-4b69-887b-e94064fc23b1).
+- Prioritise tasks according to urgency and importance
+- Consider deadlines
+- Organise activities into a structured schedule
+- Display the generated plan in a clear table
+- Help users manage multiple workplace responsibilities
 
-- **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: every change made in Lovable is committed straight to this repository.
-- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
+## 🔄 Connected Productivity Workflow
 
-## Development
+The three tools are designed to complement one another.
 
-Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
+For example:
 
-```sh
-git clone <this-repository-url>
-cd <repository-name>
-npm i
-npm run dev
-```
+**Meeting Notes → Action Items → Task Planning → Professional Email**
+
+This allows information identified during a meeting to support planning and communication activities.
+
+## 🎨 Design
+
+AI EduAssist uses a clean, modern and professional SaaS-style interface featuring:
+
+- Dashboard layout
+- Sidebar navigation
+- Dark blue and light grey colour scheme
+- Responsive desktop and mobile design
+- Clear input and output sections
+- Simple user experience
+
+The application can be accessed without creating an account or signing in.
+
+## 🤖 AI-Generated Responses
+
+AI EduAssist is designed to generate responses dynamically from the information entered by the user rather than relying on generic or predetermined responses.
+
+The application demonstrates how prompt engineering can be used to guide AI toward useful workplace outputs.
+
+## 🛡️ Responsible AI
+
+AI EduAssist is intended to assist users rather than replace professional judgement.
+
+Users should:
+
+- Review AI-generated information before using it
+- Verify important information and deadlines
+- Avoid entering confidential or sensitive learner, staff, or institutional information
+- Correct inaccurate or incomplete AI-generated content
+- Apply professional judgement when making decisions based on AI output
+
+AI-generated content may occasionally contain errors or misinterpret information.
+
+## 🧪 Testing and Refinement
+
+The application has been tested using different education and workplace scenarios, including:
+
+- Professional email requests
+- Meeting transcripts
+- Institutional reports
+- Lecture notes
+- Task lists containing multiple deadlines and priorities
+- Content outside the typical meeting-note format
+
+Testing was used to evaluate whether the AI could preserve user context, identify relevant information, organise tasks appropriately, and avoid fabricating information that was not supplied.
+
+The results were used to refine prompts and improve the application's functionality.
+
+## 🛠️ Technologies
+
+AI EduAssist was developed using:
+
+- **Lovable**
+- **Artificial Intelligence / Large Language Models**
+- **Prompt Engineering**
+- **GitHub** for version control and project storage
+
+## 🎯 Project Objectives
+
+The project demonstrates the practical application of AI to:
+
+- Improve workplace productivity
+- Reduce repetitive administrative effort
+- Support professional communication
+- Improve task organisation
+- Summarise and structure information
+- Demonstrate responsible and human-supervised AI use
+
+## 📚 Project Context
+ 
+**Project:** AI-Powered Workplace Productivity Assistant  
+**Application:** AI EduAssist
+
+**Project Developer:** Moloi Lebohang
+---
+
+### Disclaimer
+
+AI EduAssist is an AI-assisted productivity tool. AI-generated outputs should be reviewed and verified by the user before being used for professional, academic, administrative, or decision-making purposes.
