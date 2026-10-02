@@ -78,6 +78,8 @@ export const generateEmail = createServerFn({ method: "POST" })
     z
       .object({
         context: z.string().min(3),
+        recipientName: z.string().optional().default(""),
+        subject: z.string().optional().default(""),
         tone: z.enum(["formal", "friendly", "persuasive"]),
       })
       .parse(data),
@@ -88,8 +90,15 @@ export const generateEmail = createServerFn({ method: "POST" })
       friendly: "warm, approachable and friendly while remaining professional",
       persuasive: "persuasive and compelling, with a clear call to action",
     }[data.tone];
+    const recipientRule = data.recipientName
+      ? `The recipient's name is "${data.recipientName}". The greeting MUST address them by this exact name.`
+      : "Use an appropriate greeting.";
+    const subjectRule = data.subject
+      ? `The subject line MUST be exactly: "${data.subject}".`
+      : "Include a concise, relevant subject line.";
     return callAi(
-      `${SYSTEM_BASE} Draft a complete, ready-to-send email in a ${toneGuide} tone. Include a subject line, greeting, body and sign-off.`,
+      `${SYSTEM_BASE} Draft a complete, ready-to-send email in a ${toneGuide} tone. ` +
+        `${recipientRule} ${subjectRule} Include a subject line, greeting, body and sign-off.`,
       `Email context and key points:\n${data.context}`,
     );
   });
@@ -117,8 +126,11 @@ export const planTasks = createServerFn({ method: "POST" })
   .handler(async ({ data }) => {
     return callAi(
       `${SYSTEM_BASE} Create a ${data.horizon} schedule from the user's tasks. ` +
-        `First give ### Prioritised Tasks, ranking each task by urgency and importance (label each High/Medium/Low for both). ` +
-        `Then give ### Schedule with realistic time blocks. Group related tasks, put deep-focus work early, and include short breaks. ` +
+        `First give ### Prioritised Tasks: a short bullet list ranking each task by urgency and importance (label each High/Medium/Low for both). ` +
+        `Then give ### Schedule as a Markdown table with EXACTLY these columns in this order: | Date | Time | Task | Priority | Deadline |. ` +
+        `Use one row per scheduled task or time block. Use realistic dates and time ranges (e.g. 09:00–10:30). ` +
+        `Use [No deadline] when a deadline is unknown. Keep every cell concise — no line breaks inside cells. ` +
+        `Group related tasks, put deep-focus work early, and include short breaks. ` +
         `Keep it practical for an education professional's working day.`,
       `Tasks:\n${data.tasks}`,
     );

@@ -141,7 +141,7 @@ function PlannerPage() {
         <AiOutput
           output={output}
           loading={loading}
-          placeholder="Your prioritised schedule will appear here, with tasks ranked by urgency and importance."
+          placeholder="Your prioritised schedule will appear here as a table with date, time, task, priority and deadline."
         />
       </div>
     </div>
