@@ -1,9 +1,7 @@
-# AI EduAssist Dashboard
+# AI EduAssist
 # 🎓 AI EduAssist
 
 **AI EduAssist** is an AI-powered workplace productivity assistant designed to support education professionals with common administrative, communication, planning, and information-processing tasks.
-
-The application was developed as part of the **CAPACITI AI Skill Accelerator Programme** to demonstrate the practical use of Artificial Intelligence, prompt engineering, responsible AI, and AI-supported workplace productivity.
 
 ## 🚀 Project Purpose
 
